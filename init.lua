@@ -692,6 +692,38 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
+        html = {
+          filetypes = { 'html', 'htmldjango', 'javascriptreact', 'typescriptreact' }, -- add whatever you need
+        },
+
+        -- Highly recommended: emmet_ls gives you instant Emmet abbreviations + better completions
+        emmet_ls = {
+          filetypes = {
+            'html',
+            'htmldjango',
+            'css',
+            'sass',
+            'scss',
+            'less',
+            'javascriptreact',
+            'typescriptreact',
+            'eruby',
+            'php',
+            'blade',
+            'vue',
+          },
+          init_options = {
+            html = {
+              options = {
+                -- Makes emmet behave like Emmet.vim (expand with Tab, etc.)
+                ['bem.enabled'] = true,
+              },
+            },
+          },
+        },
+
+        -- optional but nice
+        cssls = {},
 
         lua_ls = {
           -- cmd = { ... },
@@ -725,6 +757,9 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'html',
+        'cssls',
+        'emmet_ls',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -785,6 +820,9 @@ require('lazy').setup({
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
         reacttypescript = { 'prettierd', 'prettier', stop_after_first = true },
         html = { 'prettierd', 'prettier', stop_after_first = true },
+        jinja = { 'prettierd', 'prettier', stop_after_first = true },
+        htmldjango = { 'prettierd', 'prettier', stop_after_first = true },
+        ['jinja.html'] = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
