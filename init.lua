@@ -255,7 +255,13 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-
+  {
+    'mattn/emmet-vim',
+    ft = { 'htmldjango', 'html', 'css', 'javascript', 'javascriptreact', 'typescriptreact' },
+    init = function()
+      vim.g.user_emmet_leader_key = '<C-z>' -- Then use <C-z>, for expansion
+    end,
+  },
   { 'tpope/vim-fugitive', lazy = false, cmd = { 'Git', 'G' } },
 
   -- NOTE: Plugins can also be added by using a table,
@@ -696,32 +702,6 @@ require('lazy').setup({
           filetypes = { 'html', 'htmldjango', 'javascriptreact', 'typescriptreact' }, -- add whatever you need
         },
 
-        -- Highly recommended: emmet_ls gives you instant Emmet abbreviations + better completions
-        emmet_ls = {
-          filetypes = {
-            'html',
-            'htmldjango',
-            'css',
-            'sass',
-            'scss',
-            'less',
-            'javascriptreact',
-            'typescriptreact',
-            'eruby',
-            'php',
-            'blade',
-            'vue',
-          },
-          init_options = {
-            html = {
-              options = {
-                -- Makes emmet behave like Emmet.vim (expand with Tab, etc.)
-                ['bem.enabled'] = true,
-              },
-            },
-          },
-        },
-
         -- optional but nice
         cssls = {},
 
@@ -759,7 +739,6 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
         'html',
         'cssls',
-        'emmet_ls',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -994,7 +973,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'python', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -1005,6 +984,9 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      incremental_selection = { enable = true },
+      textobjects = { select = { enable = true } },
+      injections = { enable = true },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
