@@ -228,8 +228,9 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHo
 -- Notification when file changes
 vim.api.nvim_create_autocmd('FileChangedShellPost', {
   pattern = '*',
-  callback = function()
-    vim.notify('File changed on disk. Buffer reloaded!', vim.log.levels.WARN)
+  callback = function(ev)
+    local filename = vim.fn.fnamemodify(ev.file, ':t')
+    vim.notify(string.format('File changed on disk. Buffer reloaded! [%s]', filename), vim.log.levels.WARN)
   end,
 })
 
@@ -1032,6 +1033,14 @@ require('lazy').setup({
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+
+  -- Markdown rendering in Neovim buffer
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    opts = {},
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    ft = { 'markdown' },
+  },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
