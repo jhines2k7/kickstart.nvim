@@ -248,6 +248,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Set indentation for JSON files to 2 spaces
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'json', 'jsonc' },
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.softtabstop = 2
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -709,7 +719,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         -- pyright = {},
         rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -726,6 +736,8 @@ require('lazy').setup({
 
         -- optional but nice
         cssls = {},
+
+        jsonls = {},
 
         lua_ls = {
           -- cmd = { ... },
@@ -761,7 +773,10 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
         'html',
         'cssls',
+        'prettier',
         'rustfmt',
+        'goimports',
+        'gofumpt',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -826,6 +841,9 @@ require('lazy').setup({
         jinja = { 'prettierd', 'prettier', stop_after_first = true },
         htmldjango = { 'prettierd', 'prettier', stop_after_first = true },
         ['jinja.html'] = { 'prettierd', 'prettier', stop_after_first = true },
+        json = { 'prettierd', 'prettier', stop_after_first = true },
+        jsonc = { 'prettierd', 'prettier', stop_after_first = true },
+        go = { 'goimports', 'gofumpt' },
       },
     },
   },

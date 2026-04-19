@@ -32,6 +32,7 @@ External Requirements:
 - Language Setup:
   - If you want to write Typescript, you need `npm`
   - If you want to write Golang, you will need `go`
+  - If you want to format JSON/Markdown, you will need `npm` (for `prettier`)
   - etc.
 
 > [!NOTE]
